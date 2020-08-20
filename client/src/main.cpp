@@ -34,7 +34,7 @@ int main() {
 
     int status_number;
 
-    std::optional<Helper::Status> temp_subsystem;
+    std::optional <Helper::Status> temp_subsystem;
 
     Helper::Request req_str;
     nlohmann::json j;
@@ -59,7 +59,7 @@ int main() {
 
 
         ec.SetSignature(req_str.signature);
-        ret = ec.Verify((uint8_t *) (req_str.message.c_str()), req_str.message.length(), ec.GetSignature(),
+        ret = ec.Verify((uint8_t * )(req_str.message.c_str()), req_str.message.length(), ec.GetSignature(),
                         ec.GetSignatureLen(), "sha256");
         if (ret != 0) {
             zmq::message_t reply{5};
