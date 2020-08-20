@@ -1,0 +1,6 @@
+client/cmake-build-debug
+lib/cmake-build-debug
+server/cmake-build-debug
+cmake-build-debug
+
+dependencies
