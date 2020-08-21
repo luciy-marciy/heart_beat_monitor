@@ -29,10 +29,9 @@ namespace Crypto {
         ERR_free_strings();
     }
 
-    int ECC::LoadPubkey(std::string pubkey) {
+    int ECC::LoadPubkey(const std::string &pubkey) {
         FILE *fp;
 
-        // load in the keys
         fp = fopen(pubkey.c_str(), "r");
         if (!fp) {
             return -1;
@@ -59,7 +58,7 @@ namespace Crypto {
         return 0;
     }
 
-    int ECC::LoadPrivkey(std::string privkey) {
+    int ECC::LoadPrivkey(const std::string &privkey) {
         FILE *fp;
 
         fp = fopen(privkey.c_str(), "r");
@@ -90,7 +89,7 @@ namespace Crypto {
         return 0;
     }
 
-    int ECC::GenerateKeys(std::string pubkeyfile, std::string privkeyfile, std::string curve_name) {
+    int ECC::GenerateKeys(const std::string &pubkeyfile, const std::string &privkeyfile, std::string curve_name) {
         EC_KEY *keygen;
         int nid = ToNid(curve_name);
 
@@ -147,7 +146,7 @@ namespace Crypto {
         return 0;
     }
 
-    int ECC::Sign(uint8_t *msg, size_t msglen, std::string sha_alg) {
+    int ECC::Sign(uint8_t *msg, size_t msglen, const std::string &sha_alg) {
         if (!evp_sign_key || !privatekey) {
             std::cerr << "invalid sign key or private key is not loaded" << std::endl;
             return -1;
@@ -195,11 +194,11 @@ namespace Crypto {
         return signature;
     }
 
-    size_t ECC::GetSignatureLen() {
+    size_t ECC::GetSignatureLen() const {
         return signature_len;
     }
 
-    int ECC::Verify(uint8_t *msg, size_t msglen, uint8_t *signature, size_t signature_len, std::string sha_alg) {
+    int ECC::Verify(uint8_t *msg, size_t msglen, uint8_t *signature, size_t signature_len, const std::string &sha_alg) {
         if (!msg || !signature) {
             std::cerr << "invalid msg or signature" << std::endl;
             return -1;
@@ -279,7 +278,5 @@ namespace Crypto {
 
         return -1;
     }
-
-
 }
 

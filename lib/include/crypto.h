@@ -24,24 +24,23 @@ namespace Crypto {
 
         ~ECC();
 
-        // loads in the pubkey
-        int LoadPubkey(std::string pubkey);
+        int LoadPubkey(const std::string &pubkey);
 
-        int LoadPrivkey(std::string privkey);
+        int LoadPrivkey(const std::string &privkey);
 
-        int GenerateKeys(std::string pubkeyfile, std::string privkeyfile, std::string curve_name);
+        int GenerateKeys(const std::string &pubkeyfile, const std::string &privkeyfile, std::string curve_name);
 
-        int Sign(uint8_t *msg, size_t msglen, std::string sha_alg);
+        int Sign(uint8_t *msg, size_t msglen, const std::string &sha_alg);
 
         uint8_t *GetSignature();
 
-        size_t GetSignatureLen();
-
-        int Verify(uint8_t *msg, size_t msglen, uint8_t *signature, size_t signature_len, std::string sha_alg);
+        [[nodiscard]] size_t GetSignatureLen() const;
 
         std::string DumpSignature();
 
         void SetSignature(std::string payload);
+
+        int Verify(uint8_t *msg, size_t msglen, uint8_t *signature, size_t signature_len, const std::string &sha_alg);
 
     private:
 
