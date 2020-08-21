@@ -1,8 +1,8 @@
-#Heartbeat monitor
+# Heartbeat monitor
 
-##Introduction :
+## Introduction :
 
-###The purpose is to write a small amount of c++ code compatible with C++ 17 that implements a client server heartbeat monitor.
+### The purpose is to write a small amount of c++ code compatible with C++ 17 that implements a client server heartbeat monitor.
 
 ### Libraries that can be used are :
 1. STL (c++17)
@@ -11,7 +11,7 @@
 1. Pistache (optional for rest), openssl(ecdsa sign)
 
 
-####Other requirements : CMake, GCC, Linux
+#### Other requirements : CMake, GCC, Linux
 Deliverable :
 Github LGPL public repo with the code and the CMakelist.txt
 Specification :
