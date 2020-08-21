@@ -60,7 +60,7 @@ int main() {
         auto t = j.dump();
         std::string_view k = t;
         socket.send(zmq::buffer(k), zmq::send_flags::none);
-        std::cout << message << std::endl;
+        std::cout << k << std::endl;
 
         zmq::message_t answ;
         return_code = socket.recv(answ, zmq::recv_flags::none);

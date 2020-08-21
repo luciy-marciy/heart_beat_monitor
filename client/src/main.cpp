@@ -53,10 +53,9 @@ int main() {
         zmq::message_t request;
         socket.recv(&request);
 
-        std::string_view request_string = static_cast<char *>(request.data());
+        std::string_view request_string = request.to_string_view();
         j = nlohmann::json::parse(request_string);
         Models::from_json(j, req_str);
-
 
         ec.SetSignature(req_str.signature);
         ret = ec.Verify((uint8_t *) (req_str.message.c_str()), req_str.message.length(), ec.GetSignature(),
@@ -108,7 +107,6 @@ int main() {
 
         Models::to_json(json_answer, answer);
         auto temp_string = json_answer.dump();
-        std::cout << temp_string;
         socket.send(zmq::buffer(temp_string), zmq::send_flags::none);
     }
 
