@@ -6,7 +6,7 @@
 
 #include <nlohmann/json.hpp>
 
-namespace Helper {
+namespace Models {
     enum class Status {
         OK = 0,
         OFF,

@@ -19,7 +19,6 @@ int main() {
     int ret;
 
     std::string pkey = "./ec_brainpool_256r1.pkey";
-    std::string curvename = "brainpool256r1";
 
     std::chrono::system_clock::time_point tp, start;
     std::time_t current_time;
@@ -65,7 +64,6 @@ int main() {
 
         zmq::message_t answ;
         return_code = socket.recv(answ, zmq::recv_flags::none);
-//        std::cout << answ << std::endl;
         sleep(1);
     }
 

@@ -12,7 +12,7 @@
 #include <string>
 
 #include <crypto.h>
-#include <helpers.h>
+#include <models.h>
 
 
 int main() {
@@ -24,7 +24,7 @@ int main() {
 
     nlohmann::json json_answer = nlohmann::json::object();
 
-    Helper::Answer answer;
+    Models::Answer answer;
 
     zmq::context_t context;
     zmq::socket_t socket{context, ZMQ_REP};
@@ -34,9 +34,9 @@ int main() {
 
     int status_number;
 
-    std::optional <Helper::Status> temp_subsystem;
+    std::optional<Models::Status> temp_subsystem;
 
-    Helper::Request req_str;
+    Models::Request req_str;
     nlohmann::json j;
 
     std::string pubkey = "./ec_brainpool_256r1.pub";
@@ -55,11 +55,11 @@ int main() {
 
         std::string_view request_string = static_cast<char *>(request.data());
         j = nlohmann::json::parse(request_string);
-        Helper::from_json(j, req_str);
+        Models::from_json(j, req_str);
 
 
         ec.SetSignature(req_str.signature);
-        ret = ec.Verify((uint8_t * )(req_str.message.c_str()), req_str.message.length(), ec.GetSignature(),
+        ret = ec.Verify((uint8_t *) (req_str.message.c_str()), req_str.message.length(), ec.GetSignature(),
                         ec.GetSignatureLen(), "sha256");
         if (ret != 0) {
             zmq::message_t reply{5};
@@ -89,24 +89,24 @@ int main() {
         if (!is_stopped) {
             status_number = status_generator(random_engine);
 
-            temp_subsystem = magic_enum::enum_cast<Helper::Status>(status_number);
+            temp_subsystem = magic_enum::enum_cast<Models::Status>(status_number);
 
             if (temp_subsystem.has_value()) {
                 answer.subsystems.subsystem1 = temp_subsystem.value();
             }
 
             status_number = status_generator(random_engine);
-            temp_subsystem = magic_enum::enum_cast<Helper::Status>(status_number);
+            temp_subsystem = magic_enum::enum_cast<Models::Status>(status_number);
             if (temp_subsystem.has_value()) {
                 answer.subsystems.subsystem2 = temp_subsystem.value();
             }
         } else {
-            answer.subsystems.subsystem1 = Helper::Status::OFF;
-            answer.subsystems.subsystem2 = Helper::Status::OFF;
+            answer.subsystems.subsystem1 = Models::Status::OFF;
+            answer.subsystems.subsystem2 = Models::Status::OFF;
         }
 
 
-        Helper::to_json(json_answer, answer);
+        Models::to_json(json_answer, answer);
         auto temp_string = json_answer.dump();
         std::cout << temp_string;
         socket.send(zmq::buffer(temp_string), zmq::send_flags::none);
