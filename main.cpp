@@ -10,7 +10,7 @@ int main() {
     ECC ec;
     int ret;
 
-    std::string msg = "try this to sign for ec ";
+    std::string msg = "try this to sign for ec";
     std::string curvename = "brainpool256r1";
     std::string pubkey = "./ec_brainpool_256r1.pub";
     std::string pkey = "./ec_brainpool_256r1.pkey";
@@ -39,12 +39,12 @@ int main() {
         return -1;
     }
 
-    auto temp = ec.DumpSignature();
-    ec.SetSignature(temp);
+//    auto temp = ec.DumpSignature();
+//    ec.SetSignature(temp);
 
 
     ret = ec.Verify((uint8_t *) (msg.c_str()), msg.length(), ec.GetSignature(), ec.GetSignatureLen(), "sha256");
-    if (ret != 0) {
+    if (ret != 1) {
         std::cerr << "failed to verify message" << std::endl;
         return -1;
     }

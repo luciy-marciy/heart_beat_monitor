@@ -32,7 +32,7 @@ int main() {
     std::cout << "Connecting to heartbeat server..." << std::endl;
     socket.connect("tcp://localhost:12277");
 
-    int status_number;
+    int status_number, ret;
 
     std::optional<Models::Status> temp_subsystem;
 
@@ -43,7 +43,6 @@ int main() {
 
     while (true) {
         Crypto::ECC ec;
-        int ret;
         ret = ec.LoadPubkey(pubkey.c_str());
         if (ret != 0) {
             std::cerr << "pubkey didn't load " << std::endl;
@@ -60,7 +59,8 @@ int main() {
         ec.SetSignature(req_str.signature);
         ret = ec.Verify((uint8_t *) (req_str.message.c_str()), req_str.message.length(), ec.GetSignature(),
                         ec.GetSignatureLen(), "sha256");
-        if (ret != 0) {
+        std::cout << ret << "\n\n\n\n\n";
+        if (ret != 1) {
             zmq::message_t reply{5};
             memcpy(reply.data(), "error", 5);
             socket.send(reply);

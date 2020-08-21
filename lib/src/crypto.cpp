@@ -238,7 +238,7 @@ namespace Crypto {
 
         EVP_MD_CTX_destroy(mdctx);
 
-        return 0;
+        return ret;
     }
 
     std::string ECC::DumpSignature() {
