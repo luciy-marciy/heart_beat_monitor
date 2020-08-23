@@ -15,13 +15,13 @@
 Deliverable :
 Github LGPL public repo with the code and the CMakelist.txt
 
-###Specification :
+### Specification :
 
 1. Client is the c++ process that we need to monitor.
 1. Server is the c++ process that we use to monitor the client state.
 
 
-##Features:
+## Features:
 1. Every 1 second the server will :
     1. ping the computer of the client to check if the hardware still function
     1. send a “areYouAlive+timestamp” query (TCP) to the port 12277 signed with a private key
